@@ -1,25 +1,30 @@
 import Node from '../scripts/Node'
-
-let array = []
+require('locus')
 
 export default class Trie {
   constructor() {
-    this.root = new Node()
+    this.root = new Node
   }
 
   insert(input) {
-    let node = new Node()
+    let currentNode = this.root
+    let lowerCase = input.toLowerCase()
+    let letters = lowerCase.split('')
 
-    let word = input[0]
+    letters.forEach((letter, index) => {
+      if(currentNode.children[letter]) {
+        currentNode = currentNode.children[letter]
+        console.log('first fired')
+      } else {
+        currentNode.children[letter] = new Node(letter)
+        let previous = currentNode
+        currentNode = currentNode.children[letter]
+      }
 
-    if(this.root.children) {
-      console.log(this.root.children)
-      this.root.children[word] = node
-      console.log(this.root.children)
-    }
-    node.children[input] = node
-    console.log(node.children)
-    return node
+      if(letters.length - 1 === index) {
+        currentNode.isWord = true
+      }
+    })
   }
 
   count(){}

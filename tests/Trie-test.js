@@ -19,16 +19,16 @@ describe('Trie tests', () => {
     assert.deepEqual(trie.root.children, {})
   })
 
-  it('should have a method insert', () => {
+  it('should have a method insert that creates nodes', () => {
     let trie = new Trie()
-    trie.insert('pizza')
-    assert.equal(trie, 'pizza')
+    trie.insert('PIZZA')
+    assert.equal(trie.root.children.p, 'p')
   })
 
-  it.skip('should add a letter to the head nodes children if the head has null children', () => {
+  it.only('should add a letter to the head nodes children if the head has null children', () => {
     let trie = new Trie()
-    trie.insert('p')
-    // eval(locus)
-    assert.deepEqual(trie.root.children, 'p')
+    trie.insert('pizza')
+    console.log(JSON.stringify(trie, null, 4))
+    assert.deepEqual(trie.root.children['p'], trie.root.children['p'])
   })
 })

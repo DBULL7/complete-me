@@ -74,8 +74,9 @@ describe('Find Node Tests', () => {
   it.only('should find a completed word', () => {
     let trie = new Trie
     trie.insert('pizza')
-    trie.insert('bear')
+    // trie.insert('bear')
+    console.log(JSON.stringify(trie, null, 4))
     // console.log(trie.findNode())
-    assert.equal(trie.findNode(), 'p')
+    assert.equal(trie.findNode('pi'), 'a')
   })
 })

@@ -37,23 +37,34 @@ export default class Trie {
     return this.dictionary.length
   }
 
-  findNode() {
+  findNode(input, currentNode) {
+    //may not need to pass in currentNode
     let currentNode = this.root
-    // console.log(currentNode.children.isWord)
-    if (currentNode.children != {}) {
-      //change node
-      let childKeys = Object.keys(currentNode.children)
-      childKeys.forEach((letter, index) => {
-        console.log('fired motherfucker')
-        currentNode = childKeys[index]
-        console.log(currentNode)
-      })
+    let letters = input.split('')
 
-    } else {
-      // push word to array
-      console.log('DONE!!!')
-      return
-    }
+    letters.forEach(letter => {
+      if(currentNode.isWord != true) {
+        currentNode = currentNode.children[letter]
+        console.log(currentNode);
+      }
+    })
+      //change node
+
+
+    //
+    // } else {
+    //   // push word to array
+    //   console.log('DONE!!!')
+    //   return
+    // let childKeys = Object.keys(currentNode.children)
+    // childKeys.forEach((letter, index) => {
+    //   console.log('fired motherfucker')
+    //   currentNode.children = childKeys[index]
+    //   currentNode = currentNode.children
+    //   console.log(currentNode)
+    // })
+    // return currentNode
+    // }
   }
 
   suggest(){}

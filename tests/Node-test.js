@@ -16,6 +16,4 @@ describe('Tests for Nodes', () => {
     let node = new Node('a')
     assert.equal(node.letter, 'a')
   })
-
-  it('should ')
 })

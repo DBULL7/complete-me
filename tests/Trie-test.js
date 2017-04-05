@@ -70,6 +70,12 @@ describe('Trie tests', () => {
   })
 })
 
-describe('Count Tests', () => {
-
+describe('Find Node Tests', () => {
+  it.only('should find a completed word', () => {
+    let trie = new Trie
+    trie.insert('pizza')
+    trie.insert('bear')
+    // console.log(trie.findNode())
+    assert.equal(trie.findNode(), 'p')
+  })
 })

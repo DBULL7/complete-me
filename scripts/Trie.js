@@ -7,7 +7,7 @@ require('locus')
 export default class Trie {
   constructor() {
     this.root = new Node
-    this.dictionary = []
+    this.dictionary = [] //could make this an object instead of an array???
   }
 
   insert(input) {
@@ -34,8 +34,26 @@ export default class Trie {
   }
 
   count(){
-    eval(locus)
     return this.dictionary.length
+  }
+
+  findNode() {
+    let currentNode = this.root
+    // console.log(currentNode.children.isWord)
+    if (currentNode.children != {}) {
+      //change node
+      let childKeys = Object.keys(currentNode.children)
+      childKeys.forEach((letter, index) => {
+        console.log('fired motherfucker')
+        currentNode = childKeys[index]
+        console.log(currentNode)
+      })
+
+    } else {
+      // push word to array
+      console.log('DONE!!!')
+      return
+    }
   }
 
   suggest(){}

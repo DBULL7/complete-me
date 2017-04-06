@@ -62,16 +62,10 @@ describe('Trie tests', () => {
     assert.equal(trie.root.children['p'].children['i'].children['e'], trie.root.children['p'].children['i'].children['e'])
     // this test could be improved not sure how yet
   })
-
-  it('should be a method of Trie that counts instances of a word', () => {
-    let trie = new Trie
-    trie.insert('pizza')
-    assert.equal(trie.count(), 1)
-  })
 })
 
-describe('Find Node Tests', () => {
-  it.only('should find a completed word', () => {
+describe('Suggest Tests', () => {
+  it('should find the current node', () => {
     let trie = new Trie
     trie.insert('pizza')
     // trie.insert('bear')
@@ -79,4 +73,14 @@ describe('Find Node Tests', () => {
     // console.log(trie.findNode())
     assert.equal(trie.findNode('pi'), 'a')
   })
+
+  it.only('should suggest a word', () => {
+    let trie = new Trie
+    // trie.insert('pi')
+    trie.insert('pie')
+    trie.insert('pizza')
+    // console.log(JSON.stringify(trie, null, 4))
+    assert.deepEqual(trie.suggest('pi'), ['pie', 'pizza'])
+  })
+
 })

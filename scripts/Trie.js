@@ -7,17 +7,11 @@ require('locus')
 export default class Trie {
   constructor() {
     this.root = new Node
-    this.dictionary = [] //could make this an object instead of an array???
   }
 
   insert(input) {
     let currentNode = this.root
     let lowerCase   = input.toLowerCase()
-    if (this.dictionary.includes(lowerCase)) {
-      console.log('already in our dictionary')
-    } else {
-      this.dictionary.push(lowerCase)
-    }
     let letters     = lowerCase.split('')
 
     letters.forEach((letter, index) => {
@@ -37,35 +31,33 @@ export default class Trie {
     return this.dictionary.length
   }
 
-  findNode(input, currentNode) {
-    //may not need to pass in currentNode
+  findNode(input) {
     let currentNode = this.root
     let letters = input.split('')
 
     letters.forEach(letter => {
-      if(currentNode.isWord != true) {
+      if(currentNode.isWord != true) { //may be a bad check
         currentNode = currentNode.children[letter]
-        console.log(currentNode);
       }
     })
-      //change node
-
-
-    //
-    // } else {
-    //   // push word to array
-    //   console.log('DONE!!!')
-    //   return
-    // let childKeys = Object.keys(currentNode.children)
-    // childKeys.forEach((letter, index) => {
-    //   console.log('fired motherfucker')
-    //   currentNode.children = childKeys[index]
-    //   currentNode = currentNode.children
-    //   console.log(currentNode)
-    // })
-    // return currentNode
-    // }
+    return currentNode
   }
 
-  suggest(){}
+  suggest(input, suggestions = []){
+    let currentLocation = this.findNode(input)
+    let locationKeys = Object.keys(currentLocation)
+    let suggestionsArray = suggestions
+    console.log(locationKeys.includes('isTrue'))
+    if(locationKeys.includes('isWord')) {
+      suggestionsArray.push(input)
+      console.log('fired');
+    }
+
+    Object.keys(currentLocation.children).forEach(key => {
+      this.suggest(input + key, suggestionsArray)
+    })
+    return suggestionsArray
+  }
 }
+
+    // if(!locationKeys.isWord) {

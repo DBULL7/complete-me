@@ -1,6 +1,8 @@
 import { assert } from 'chai'
 import Trie from '../scripts/Trie'
 import Node from '../scripts/Node'
+import fs from 'fs';
+const text = "/usr/share/dict/words"
 require('locus')
 
 describe('Trie tests', () => {
@@ -70,17 +72,34 @@ describe('Suggest Tests', () => {
     trie.insert('pizza')
     // trie.insert('bear')
     console.log(JSON.stringify(trie, null, 4))
-    // console.log(trie.findNode())
-    assert.equal(trie.findNode('pi'), 'a')
+    assert.equal(trie.findNode('pi'), trie.root.children['p'].children['i'])
   })
 
-  it.only('should suggest a word', () => {
+  it('should suggest a word', () => {
     let trie = new Trie
     // trie.insert('pi')
     trie.insert('pie')
     trie.insert('pizza')
-    // console.log(JSON.stringify(trie, null, 4))
-    assert.deepEqual(trie.suggest('pi'), ['pie', 'pizza'])
+    trie.insert('pied')
+    trie.insert('pizzeria')
+    trie.insert('pickles')
+    console.log(JSON.stringify(trie, null, 4))
+    assert.deepEqual(trie.suggest('pi'), ['pie', 'pied', 'pizza', 'pizzeria', 'pickles'])
+  })
+})
+
+describe('Populate Tests', () => {
+  it('should populate the whole dictionary into the trie', () => {
+    let trie = new Trie
+    let dictionary = fs.readFileSync(text).toString().trim().split('\n');
+    trie.populate(dictionary)
+    assert.equal(trie.count(), 235886)
   })
 
+  it('should suggest things from the dictionary', () => {
+    let trie = new Trie
+    let dictionary = fs.readFileSync(text).toString().trim().split('\n');
+    trie.populate(dictionary)
+    assert.deepEqual(trie.suggest('piz'), ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"])
+  })
 })

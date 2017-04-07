@@ -84,7 +84,7 @@ describe('Suggest Tests', () => {
     trie.insert('pizzeria')
     trie.insert('pickles')
     trie.select('pizza')
-    // console.log(JSON.stringify(trie, null, 4))
+
     assert.deepEqual(trie.suggest('pi'), ['pizza', 'pie', 'pied', 'pizzeria', 'pickles'])
   })
 })
@@ -116,13 +116,23 @@ describe('Select Tests', () => {
 })
 
 describe('sortSuggestions Tests', () => {
-  it('should increment the selected property of the node', () => {
+  it('should return an array', () => {
     let trie = new Trie
+    assert.deepEqual(trie.sortSuggestions([{input: 'suh', selected: 1}]), ['suh'])
+  })
+
+
+
+  it('return an array sorted by how many times each word was previously selected', () => {
+    let trie = new Trie
+
     trie.insert('pizzeria')
     trie.insert('pizza')
     trie.insert('pizzas')
     trie.select('pizza')
+    trie.select('pizza')
+    trie.select('pizzeria')
 
-    assert.deepEqual(trie.suggest('pi'), [])
+    assert.deepEqual(trie.suggest('pi'), ['pizza', 'pizzeria', 'pizzas'])
   })
 })

@@ -77,14 +77,15 @@ describe('Suggest Tests', () => {
 
   it('should suggest a word', () => {
     let trie = new Trie
-    // trie.insert('pi')
+
     trie.insert('pie')
     trie.insert('pizza')
     trie.insert('pied')
     trie.insert('pizzeria')
     trie.insert('pickles')
-    console.log(JSON.stringify(trie, null, 4))
-    assert.deepEqual(trie.suggest('pi'), ['pie', 'pied', 'pizza', 'pizzeria', 'pickles'])
+    trie.select('pizza')
+    // console.log(JSON.stringify(trie, null, 4))
+    assert.deepEqual(trie.suggest('pi'), ['pizza', 'pie', 'pied', 'pizzeria', 'pickles'])
   })
 })
 
@@ -101,5 +102,27 @@ describe('Populate Tests', () => {
     let dictionary = fs.readFileSync(text).toString().trim().split('\n');
     trie.populate(dictionary)
     assert.deepEqual(trie.suggest('piz'), ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"])
+  })
+})
+
+describe('Select Tests', () => {
+  it('should increment the selected property of the node', () => {
+    let trie = new Trie
+    trie.insert('pizza')
+    trie.select('pizza')
+
+    assert.deepEqual(1, trie.findNode('pizza').selected)
+  })
+})
+
+describe('sortSuggestions Tests', () => {
+  it('should increment the selected property of the node', () => {
+    let trie = new Trie
+    trie.insert('pizzeria')
+    trie.insert('pizza')
+    trie.insert('pizzas')
+    trie.select('pizza')
+
+    assert.deepEqual(trie.suggest('pi'), [])
   })
 })

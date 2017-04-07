@@ -21,11 +21,40 @@ describe('Trie tests', () => {
     assert.deepEqual(trie.root.children, {})
   })
 
+  it('should have a property dictionary which is an empty array', () => {
+    let trie = new Trie
+
+    assert.deepEqual(trie.dictionary, [])
+  })
+
+  it('should have property dictionary which stores inserted words', () => {
+    let trie = new Trie
+
+    assert.deepEqual(trie.dictionary, [])
+    trie.insert('pizza')
+    assert.deepEqual(trie.dictionary, ['pizza'])
+  })
+
+  it('should have a property amount which initializes at zero', () => {
+    let trie = new Trie
+
+    assert.equal(trie.amount, 0)
+  })
+
+  it('should have a property amount which counts how many words have been inserted', () => {
+    let trie = new Trie
+
+    assert.equal(trie.amount, 0)
+    trie.insert('pizza')
+    assert.equal(trie.amount, 1)
+  })
+
+  /// need a test to prevent words that already exist in the dictionary from being inserted again.
+
   it('should have a method insert that creates nodes', () => {
     let trie = new Trie
     trie.insert('PIZZA')
     trie.insert('apple')
-    console.log(JSON.stringify(trie, null, 4))
     assert.equal(trie.root.children['p'], trie.root.children['p'])
     assert.equal(trie.root.children['p'].children['i'], trie.root.children['p'].children['i'])
     assert.equal(trie.root.children['a'], trie.root.children['a'])
@@ -46,7 +75,6 @@ describe('Trie tests', () => {
     trie.insert('pie')
     trie.insert('party')
     trie.insert('pizzeria')
-    console.log(JSON.stringify(trie, null, 4))
     assert.deepEqual(trie.root.children['p'], trie.root.children['p'])
   })
 
@@ -71,7 +99,6 @@ describe('Suggest Tests', () => {
     let trie = new Trie
     trie.insert('pizza')
     // trie.insert('bear')
-    console.log(JSON.stringify(trie, null, 4))
     assert.equal(trie.findNode('pi'), trie.root.children['p'].children['i'])
   })
 
@@ -123,7 +150,7 @@ describe('sortSuggestions Tests', () => {
 
 
 
-  it('return an array sorted by how many times each word was previously selected', () => {
+  it('should return an array sorted by how many times each word was previously selected', () => {
     let trie = new Trie
 
     trie.insert('pizzeria')
@@ -134,5 +161,11 @@ describe('sortSuggestions Tests', () => {
     trie.select('pizzeria')
 
     assert.deepEqual(trie.suggest('pi'), ['pizza', 'pizzeria', 'pizzas'])
+  })
+
+  it('should return an array sorted by how many times each word was previously selected', () => {
+    let trie = new Trie
+    let suggestion = [{input: 'suh', selected: 0}, {input: 'lit', selected: 3}, {input: 'yo', selected: 1000}]
+    assert.deepEqual(trie.sortSuggestions(suggestion), ['yo', 'lit', 'suh'])
   })
 })

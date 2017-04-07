@@ -67,6 +67,7 @@ export default class Trie {
     return this.sortSuggestions(suggestionsArray)
   }
 
+
   sortSuggestions(suggestions) {
     suggestions.sort((a, b) => {
       return b.selected - a.selected
@@ -79,12 +80,12 @@ export default class Trie {
   }
 
 
-
   populate (dictionary) {
     dictionary.forEach(word => {
       this.insert(word)
     })
   }
+
 
   select(input) {
     let currentNode = this.findNode(input)
